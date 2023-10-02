@@ -4,14 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- 配置页签图标 -->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- 去package里面找网站标题 -->
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- 图标 -->
+    <script src="https://kit.fontawesome.com/4d95552707.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <!-- 准备一个容器 -->
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <script src="../vue.config.js"></script>
+    <script src="../src/main.js"></script>
   </body>
 </html>
