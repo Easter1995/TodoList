@@ -10,7 +10,7 @@ a:link{
     }
 }
 
-button{
+.top-buttons button {
     color: aliceblue;
     background-color: transparent;
     border-style: none;
@@ -23,12 +23,22 @@ button{
     }
 }
 
+#common-btn {
+    background-color: transparent;
+    border-style: none;
+    &:hover {
+        border: 2px solid aliceblue;
+        background-color: rgb(250, 181, 77);
+    }
+}
+
 // 主要用来规定每一条list的样式
 ul{margin: 0px;padding: 0px;}
 li{
     display: flex;
     margin: 3vw 0 3vw 0;
-    padding: 4vw 0 4vw 0;
+    padding: 1vw 0 1vw 0;
+    height: 5vw;
     border: 2px solid rgb(250, 181, 77);
     border-radius: 10px;
     background-color: #ffecca;

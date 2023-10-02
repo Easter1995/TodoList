@@ -24,5 +24,15 @@
 </script>
 
 <style scoped lang="scss">
-
+    /* 整体高度 */
+    .footer {
+        height: 10vw;
+        text-align: center;
+        background-color: #ffac74;
+        .footer-inner {
+            margin: 3vw;
+            font-size: 1.5vw;
+            color: aliceblue;
+        }
+    }
 </style>

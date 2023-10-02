@@ -1,31 +1,34 @@
 <!-- 每一条LIST -->
 <template>
-    <ul class="lists-ol">
-        <div class="lists-wrap">
-            <!-- 具体内容 -->
-            <div class="lists-content">
-                <li>
-                    <input type="checkbox" name="isDone" id="isDone">
-                    <label for="isDone">{{event1}}</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="isDone" id="isDone">
-                    <label for="isDone">{{event2}}</label>
-                </li>
-            </div>
+    <div class="lists-wrap">
+        <!-- 具体内容 -->
+        <div class="lists-content">
+            <li>
+                <!-- 使用todo对象的数据 -->
+                <!-- 勾选框 -->
+                <input type="checkbox" name="isDone" id="isDone" :checked="todo.done">
+                <!-- 勾选框后面的文字 -->
+                <label for="isDone" id="todo-title">{{todo.title}}</label>
+                <!-- 删除键样式 -->
+                <button 
+                    id="common-btn" 
+                    style="
+                        color: #873803;
+                        width: 10%;
+                        font-size: 1.5vw;">
+                            <i class="fa-solid fa-calendar-xmark"
+                    ></i>
+                </button>
+            </li>
         </div>
-    </ul>
+    </div>
 </template>
 
 <script>
     export default {
         name:'Item',
-        data() {
-            return {
-                event1:'今天要学习',
-                event2:'明天要学习'
-            }
-        }
+        // 声明接收todo对象数据
+        props:['todo']
     }
 </script>
     
@@ -42,5 +45,8 @@
     #isDone {
         width: 1.5vw;
         height: 1.5vw;
+    }
+    #todo-title {
+        width: 85%;
     }
 </style>

@@ -3,14 +3,12 @@
     <!-- 全局 -->
     <div class="todo-container">
       <!-- 菜单部分 -->
-      <div class="todo-menu">
-        <ListMenu/>
-      </div>
       <!-- list部分 -->
       <div class="todo-list-wrap">
         <Top/>
         <div id="division-line"></div>
         <List/>
+        <div id="division-line"></div>
         <Bottom/>
       </div>
     </div>
@@ -35,12 +33,16 @@
   .todo-container {
     display: flex;
     flex-direction: row;
+    height: 100%;
     .todo-menu {
       width: 35%;
     }
     .todo-list-wrap {
-      width: 60%;
-      margin-right: 17%;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      margin: 0 17% 0 17%;
     }
   }
   /* menu的占位 */

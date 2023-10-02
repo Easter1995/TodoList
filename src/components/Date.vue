@@ -3,7 +3,7 @@
     <div class="date">
         <!-- 图标 -->
         <span class="date-icon">
-            <button style="width: 20%;">
+            <button style="width: 20%;color: aliceblue;" id="common-btn">
                 <i class="fa-solid fa-calendar-days"></i>
             </button>
         </span>
