@@ -1,0 +1,17 @@
+// 正常未被访问的链接，取消a标签的下划线
+a:link{
+	text-decoration:none;
+}
+
+button{
+    color: aliceblue;
+    background-color: transparent;
+    border-style: none;
+    width: 50%;
+    font-size: 1.8vw;
+    padding: 1vw;
+    &:hover {
+        border: 2px solid aliceblue;
+        background-color: rgb(250, 181, 77);
+    }
+}

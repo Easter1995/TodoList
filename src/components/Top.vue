@@ -2,35 +2,99 @@
 <template>
     <header class="header">
         <div class="top-wrap">
-            <div class="title">
-                <a href="/">
-                    <div class="top-title">TODO LIST</div>
-                </a>
+            <!-- 大标题 -->
+            <div class="title-wrapper">
+                <div class="title">
+                    <a href="/">
+                        <div class="top-title">TODO LIST</div>
+                    </a>
+                </div>
             </div>
-            <div class="top-buttons">
-                <button id="menu">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <button id="home">
-                    <i class="fa-solid fa-house"></i>
-                </button>
-                <button id="search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                <button id="new-list">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
+            <!-- 按键和日期 -->
+            <div class="button-wrapper">
+                <div class="top-buttons">
+                    <!-- 左侧按钮 -->
+                    <div class="left-button top-comp" style="float: left;width: 40%;">
+                        <button id="menu">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <button id="home">
+                            <i class="fa-solid fa-house"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- 日期 -->
+                <div class="calendar top-comp">
+                    <Date></Date>
+                </div>
+                <div class="top-buttons">
+                    <!-- 右侧按钮 -->
+                    <div class="right-button top-comp" style="float: right;width: 40%;">
+                        <button id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <button id="new-list">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 </template>
 
 <script>
+    import Date from './Date'
     export default {
-        name:'Top'
+        name:'Top',
+        components:{Date}
     }
 </script>
 
 <style scoped lang="scss">
+    /* 开头整体的布局 */
+    .top-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #ffac74;
+    }
+    /* 大标题整体的布局 */
+    .title-wrapper {
+        display: flex;
+        padding: 1vw 0;
+        width: 100%;
+        justify-content: space-around;
+    }
+    .title{
+        padding-bottom: 1px;
+        &:hover{
+            border-bottom: solid #eee;
+        }
+    }
+    /* 大标题的样式 */
+    .top-title {
+        font-size: 5.5vw;
+        font-weight: 800;
+        color: aliceblue;
+    }
 
+    /* 按键整体的布局 */
+    .button-wrapper {
+        display: flex;
+        width: 100%;
+    }
+    .top-buttons {
+        width: 40%;
+        margin-bottom: 1%;
+        padding: 0 10px 0 10px;
+    }
+    
+    /* 日期的布局 */
+    .calendar {
+        width: 40%;
+        text-align: center;
+        color: aliceblue;
+    }
 </style>

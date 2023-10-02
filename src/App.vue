@@ -3,7 +3,6 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <Top/>
-        <Date/>
         <List/>
         <Bottom/>
       </div>
@@ -19,7 +18,7 @@
 
   export default {
     name: 'App',
-    components:{Bottom,Date,List,Top}
+    components:{Bottom,List,Top}
   }
 </script>
 
