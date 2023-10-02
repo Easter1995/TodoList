@@ -3,7 +3,9 @@
     <div class="date">
         <!-- 图标 -->
         <span class="date-icon">
-            <i class="fa-solid fa-calendar-days"></i>
+            <button style="width: 20%;">
+                <i class="fa-solid fa-calendar-days"></i>
+            </button>
         </span>
         <!-- 日期内容 -->
         <span class="date-content">
@@ -19,5 +21,7 @@ export default {
 </script>
 
 <style>
-
+    .date {
+        font-size: 1.4vw;
+    }
 </style>

@@ -4,7 +4,7 @@
         <div class="top-wrap">
             <!-- 大标题 -->
             <div class="title-wrapper">
-                <div class="title">
+                <div class="title isLink">
                     <a href="/">
                         <div class="top-title">TODO LIST</div>
                     </a>
@@ -14,7 +14,7 @@
             <div class="button-wrapper">
                 <div class="top-buttons">
                     <!-- 左侧按钮 -->
-                    <div class="left-button top-comp" style="float: left;width: 40%;">
+                    <div class="left-button top-comp" style="float: left;">
                         <button id="menu">
                             <i class="fa-solid fa-bars"></i>
                         </button>
@@ -29,11 +29,11 @@
                 </div>
                 <div class="top-buttons">
                     <!-- 右侧按钮 -->
-                    <div class="right-button top-comp" style="float: right;width: 40%;">
+                    <div class="right-button top-comp" style="float: right;">
                         <button id="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                        <button id="new-list">
+                        <button id="top-new-list">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
@@ -66,12 +66,6 @@
         padding: 1vw 0;
         width: 100%;
         justify-content: space-around;
-    }
-    .title{
-        padding-bottom: 1px;
-        &:hover{
-            border-bottom: solid #eee;
-        }
     }
     /* 大标题的样式 */
     .top-title {
