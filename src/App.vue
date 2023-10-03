@@ -17,7 +17,6 @@
 
 <script>
   import Bottom from './components/Bottom'
-  import Date from './components/Date'
   import List from './components/List'
   import ListMenu from './components/ListMenu'
   import Top from './components/Top'

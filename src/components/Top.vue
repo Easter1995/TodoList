@@ -15,18 +15,15 @@
                 <div class="top-buttons">
                     <!-- 左侧按钮 -->
                     <div class="left-button top-comp" style="float: left;">
-                        <button id="menu">
-                            <i class="fa-solid fa-bars"></i>
+                        <button id="selectAll" v-on:click="selectAll">
+                            <i class="fa-solid fa-clipboard-check"></i>
                         </button>
-                        <button id="home">
-                            <i class="fa-solid fa-house"></i>
+                        <button id="clearDone" v-on:click="clearDone">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>
                 </div>
-                <!-- 日期 -->
-                <div class="calendar top-comp">
-                    <Date></Date>
-                </div>
+                
                 <div class="top-buttons">
                     <!-- 右侧按钮 -->
                     <div class="right-button top-comp" style="float: right;">
@@ -44,10 +41,22 @@
 </template>
 
 <script>
-    import Date from './Date'
+    import pubsub from 'pubsub-js'
     export default {
         name:'Top',
-        components:{Date}
+        components:{Date},
+        methods: {
+            //全选按钮
+            selectAll() {
+                pubsub.publish('selectAll');
+            },
+
+            //清空已经做完的事项按钮
+            clearDone() {
+                pubsub.publish('clearDone');
+            }
+
+        },
     }
 </script>
 
@@ -80,7 +89,7 @@
         width: 100%;
     }
     .top-buttons {
-        width: 40%;
+        width: 100%;
         margin-bottom: 1%;
         padding: 0 10px 0 10px;
     }

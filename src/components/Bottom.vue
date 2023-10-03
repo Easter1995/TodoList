@@ -2,24 +2,43 @@
 <template>
     <footer class="footer">
         <div class="footer-inner">
-            <span class="select-all">
-                <span id="select-all-icon">
-                    <i class="fa-solid fa-champagne-glasses"></i>
-                </span>
-                <span id="select-all-button">
-                    <input type="checkbox" name="select-all-button" id="select-all-button">
-                </span>
+            <span id="progress-icon">
+                <i class="fa-solid fa-champagne-glasses" style="font-size: 2vw;"></i>
             </span>
-            <span class="progress">
-                progress:done{{isDone}}/all{{allEvents}}
-            </span>
+            <span id="progress" style="font-size: 2vw;">done: {{done}}/all: {{all}}</span>
         </div>
     </footer>
 </template>
 
 <script>
+    import pubsub from 'pubsub-js'
     export default {
-        name:'Bottom'
+        name:'Bottom',
+
+        data() {
+            return {
+                done:0,
+                all:0
+            }
+        },
+
+        //挂载
+        mounted() {
+            //订阅消息
+            this.pubId = pubsub.subscribe('progress',(_,progressNum)=>{
+                if(progressNum[1] == progressNum[0])
+                    document.getElementById("progress").innerHTML="Congratulatios!You've done all tasks!";
+                else {
+                    this.done=progressNum[0];
+                    this.all=progressNum[1];
+                }
+            })
+           
+        },
+        //在组件销毁前取消订阅
+        beforeDestroy() {
+            pubsub.unsubscribe(this.pubId)
+        }
     }
 </script>
 

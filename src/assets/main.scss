@@ -28,6 +28,7 @@ a:link{
     border-style: none;
     &:hover {
         border: 2px solid aliceblue;
+        border-radius: 10px;
         background-color: rgb(250, 181, 77);
     }
 }
