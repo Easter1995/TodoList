@@ -10,6 +10,24 @@ a:link{
     }
 }
 
+/* 整体布局 */
+.main-body {
+    padding: 10px;
+    background-color: rgb(255, 243, 227);
+}
+
+/* 内容 */
+.main-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 区分doing和done */
+.checkbox {
+    display: flex;
+    flex-direction: column;
+}
+
 .top-buttons button {
     color: aliceblue;
     background-color: transparent;

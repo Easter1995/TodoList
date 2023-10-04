@@ -38,7 +38,7 @@
                         @keyup.enter="edit(todo,$event)">
                 </div>
 
-                <div class="list-buttons">
+                <div class="list-buttons" style="width: 30%;">
                     <!-- 删除键样式 -->
                     <button 
                         id="common-btn" 
@@ -93,3 +93,11 @@
         }
     }
 </script>
+
+<style>
+    .lists-content {
+        font-size: 1.5vw;
+        color: #873803;
+    }
+
+</style>

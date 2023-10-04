@@ -101,11 +101,7 @@
     ul {
         list-style: none;
     }
-    /* 区分doing和done */
-    .checkbox {
-        display: flex;
-        flex-direction: column;
-    }
+    
     /* 每条list的内容 */
     .lists-content {
         font-size: 1.5vw;

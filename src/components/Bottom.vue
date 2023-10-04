@@ -25,12 +25,12 @@
         //挂载
         mounted() {
             //订阅消息
-            this.pubId = pubsub.subscribe('progress',(_,progressNum)=>{
-                if(progressNum[1] == progressNum[0])
+            this.pubId = pubsub.subscribe('progress1',(_,progressNum1)=>{
+                if(progressNum1[1] == progressNum1[0])
                     document.getElementById("progress").innerHTML="Congratulatios!You've done all tasks!";
                 else {
-                    this.done=progressNum[0];
-                    this.all=progressNum[1];
+                    this.done=progressNum1[0];
+                    this.all=progressNum1[1];
                 }
             })
            

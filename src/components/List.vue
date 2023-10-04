@@ -92,7 +92,7 @@
         // 这里是设置定时器，想让统计进度的函数每秒执行一次，一直更新进度
         created: function () {
                     //这里是定时器
-                    setInterval(this.timer, 1000);
+                    setInterval(this.timer, 500);
                 },
 
         mounted() {
@@ -187,14 +187,14 @@
                 });
             },
 
-            //给bottom组件传递数据
+            //给CustomList组件传递数据
+            //修改后
             bottomNum(todos) {
                 let doneNum = 0;
                 let allNum = todos.length;
-                todos.forEach((todo) => {
-                    if(todo.done) {
+                this.todos.forEach((todo) => {
+                    if(todo.done)
                         doneNum++;
-                    }
                 });
                 let progressNum = [doneNum,allNum];
                 //把这个数组传递给bottom组件
@@ -215,22 +215,11 @@
 </script>
 
 <style scoped lang="scss">
-    /* 整体布局 */
-    .main-body {
-        padding: 10px;
-        background-color: rgb(255, 243, 227);
-    }
-
     .lists {
         display: flex;
         flex-direction: row;
     }
 
-    /* 内容 */
-    .main-wrap {
-        display: flex;
-        flex-direction: column;
-    }
 
     .content {
         width: 30%;

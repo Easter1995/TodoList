@@ -1,12 +1,14 @@
 <template>
   <div id="root">
     <!-- 全局 -->
-    <div class="todo-container">
+    <div class="todo-container" style="margin: 0 10%;">
       <!-- list部分 -->
       <div class="todo-list-wrap">
         <Top/>
         <div id="division-line"></div>
         <List/>
+        <div id="division-line"></div>
+        <div style="text-align: center; color: coral; font-size: 2.5vw;">MAKE YOUR OWN LISTS!</div>
         <CustomList/>
         <div id="division-line"></div>
         <Bottom/>
