@@ -11,20 +11,53 @@
                 <input type="submit" value="submit" id="submit" v-on:click="add">
                 <span>&emsp;</span>
             </div>
-            <!-- 具体list的内容 -->
-            <div class="content">
-                <ul>
-                    <!-- 遍历data里面的todos数组，作为每一项具体的Item -->
-                    <!-- 遍历todos里面的元素，给它命名为todoObj -->
-                    <!-- 把checkedChange函数传递给Item -->
-                    <Item
-                        v-for="(todo,index) in todos"
-                        :key="todo.id"
-                        :todo="todo"
-                        :checkedChange="checkedChange"
-                        :deleteList="deleteList"
-                    ></Item>
-                </ul>
+            
+            <div class="lists">
+                <!-- 还没有做的项目 -->
+                <div class="content">
+                    <div class="List-title">Not Start</div>
+                    <ul>
+                        <!-- 遍历data里面的todos数组，作为每一项具体的Item -->
+                        <!-- 遍历todos里面的元素，给它命名为todoObj -->
+                        <!-- 把checkedChange函数传递给Item -->
+                        <Item v-for="(todo,index) in notDoneLists" 
+                            :key="todo.id" 
+                            :todo="todo" 
+                            :checkedChange="checkedChange"
+                            :checkedChangeDoing="checkedChangeDoing"
+                            :deleteList="deleteList"></Item>
+                    </ul>
+                </div>
+                
+                <!-- 已经做完的项目 -->
+                <div class="content">
+                    <div class="List-title">Alredy Done</div>
+                    <ul>
+                        <!-- 遍历data里面的todos数组，作为每一项具体的Item -->
+                        <!-- 遍历todos里面的元素，给它命名为todoObj -->
+                        <!-- 把checkedChange函数传递给Item -->
+                        <Item v-for="(todo,index) in doneLists" 
+                            :key="todo.id" :todo="todo" 
+                            :checkedChange="checkedChange"
+                            :checkedChangeDoing="checkedChangeDoing"
+                            :deleteList="deleteList"></Item>
+                    </ul>
+                </div>
+
+                <!-- 正在完成的项目 -->
+                <div class="content">
+                    <div class="List-title">Doing</div>
+                    <ul>
+                        <!-- 遍历data里面的todos数组，作为每一项具体的Item -->
+                        <!-- 遍历todos里面的元素，给它命名为todoObj -->
+                        <!-- 把checkedChange函数传递给Item -->
+                        <Item v-for="(todo,index) in doingLists" 
+                            :key="todo.id" :todo="todo" 
+                            :checkedChange="checkedChange"
+                            :checkedChangeDoing="checkedChangeDoing"
+                            :deleteList="deleteList"></Item>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -36,6 +69,25 @@
     export default {
         name:'List',
         components: {Item},
+
+        computed: {
+            //通过计算过滤掉列表中不需要显示的项目
+            notDoneLists:function() {
+                return this.todos.filter(function(todo) {
+                    return (!todo.done)&&(!todo.doing);//返回done和doing是false的项
+                })
+            },
+            doneLists:function() {
+                return this.todos.filter(function(todo) {
+                    return todo.done&&(!todo.doing);
+                })
+            },
+            doingLists:function() {
+                return this.todos.filter(function(todo) {
+                    return (todo.doing)&&(!todo.done);
+                })
+            }
+        },
 
         // 这里是设置定时器，想让统计进度的函数每秒执行一次，一直更新进度
         created: function () {
@@ -60,14 +112,17 @@
                     });
                 }
             }) 
+
+            //修改todolist的内容
+            //this.$bus.$on('updateTodo',this.update);
         },
 
         data() {
             return {
                 // 把全部数据用todos数组来保存，todos数组的元素是对象0
                 todos:[
-                    {id:1,title:'好好学习',done:true},
-                    {id:2,title:'天天向上',done:false}
+                    {id:1,title:'好好学习',done:false,doing:false,isEdit:false},
+                    {id:2,title:'天天向上',done:true,doing:false,isEdit:false}
                 ],
                 // 下一个id
                 nextTodoId:3
@@ -83,7 +138,9 @@
                         id:this.nextTodoId++,
                         // 获取用户输入值
                         title:document.getElementById("todo-list-text").value,
-                        done:false
+                        done:false,
+                        doing:false,
+                        isEdit:false,
                     });
                     // 清空用户输入值
                     document.getElementById("todo-list-text").value="";
@@ -95,6 +152,20 @@
                 this.todos.forEach((todo) => {
                     if(todo.id == id) {
                         todo.done = !todo.done;//done值取反
+                        if(todo.done)
+                            todo.doing = false;
+                        return;
+                    }
+                });
+            },
+
+            //勾选doing和取消doing的函数
+            checkedChangeDoing(id) {
+                this.todos.forEach((todo) => {
+                    if(todo.id == id) {
+                        todo.doing = !todo.doing;//doing值取反
+                        if(todo.doing)
+                            todo.done = false;
                         return;
                     }
                 });
@@ -106,7 +177,16 @@
                     return todo.id !== id;
                 })
             },
-        
+
+            //编辑事项的函数
+            update(id,title) {
+                this.todos.forEach((todo) => {
+                    if(todo.id == id) {
+                        todo.title = title;
+                    }
+                });
+            },
+
             //给bottom组件传递数据
             bottomNum(todos) {
                 let doneNum = 0;
@@ -141,10 +221,20 @@
         background-color: rgb(255, 243, 227);
     }
 
+    .lists {
+        display: flex;
+        flex-direction: row;
+    }
+
     /* 内容 */
     .main-wrap {
         display: flex;
         flex-direction: column;
+    }
+
+    .content {
+        width: 30%;
+        margin: 0 2vw 0 2vw;
     }
     /* 新增事项 */
     .new-list {
@@ -162,5 +252,16 @@
                 background-color: rgb(250, 181, 77);
             }
         }
+    }
+
+    /* list分类的标题 */
+    .List-title {
+        font-size: 3vw;
+        text-align: center;
+        color: coral;
+        background-color: #f2deb9;
+        height: 7vw;
+        border-radius: 20px;
+        margin: 2vw 0 2vw 0;
     }
 </style>

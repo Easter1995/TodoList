@@ -26,6 +26,8 @@ a:link{
 #common-btn {
     background-color: transparent;
     border-style: none;
+    margin: 2vw 1vw 1vw 1vw;
+    width: 4vw;
     &:hover {
         border: 2px solid aliceblue;
         border-radius: 10px;
@@ -39,7 +41,7 @@ li{
     display: flex;
     margin: 3vw 0 3vw 0;
     padding: 1vw 0 1vw 0;
-    height: 5vw;
+    height: 14vw;
     border: 2px solid rgb(250, 181, 77);
     border-radius: 10px;
     background-color: #ffecca;
@@ -51,4 +53,5 @@ li{
 
 #new-list {
     @extend li;
+    height: 5vw;
 }

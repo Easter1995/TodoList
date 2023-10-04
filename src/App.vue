@@ -2,12 +2,12 @@
   <div id="root">
     <!-- 全局 -->
     <div class="todo-container">
-      <!-- 菜单部分 -->
       <!-- list部分 -->
       <div class="todo-list-wrap">
         <Top/>
         <div id="division-line"></div>
         <List/>
+        <CustomList/>
         <div id="division-line"></div>
         <Bottom/>
       </div>
@@ -18,12 +18,12 @@
 <script>
   import Bottom from './components/Bottom'
   import List from './components/List'
-  import ListMenu from './components/ListMenu'
+  import CustomList from './components/CustomList'
   import Top from './components/Top'
 
   export default {
     name: 'App',
-    components:{Bottom,List,Top,ListMenu}
+    components:{Bottom,List,Top,CustomList}
   }
 </script>
 
@@ -41,7 +41,6 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-      margin: 0 17% 0 17%;
     }
   }
   /* menu的占位 */

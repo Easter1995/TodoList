@@ -1,4 +1,4 @@
-<!-- 每一条LIST -->
+<!-- 自定义Item -->
 <template>
     <div class="lists-wrap">
         <!-- 具体内容 -->
@@ -13,7 +13,7 @@
                             name="isDone" 
                             id="isDone" 
                             :checked="todo.done" 
-                            v-on:click="checkedChange(todo.id)">
+                            v-on:click="checkedChange(listId,todo.id)">
                     </div>
 
                     <!-- 勾选正在完成 -->
@@ -22,7 +22,7 @@
                             name="isDoing" 
                             id="isDoing" 
                             :checked="todo.doing" 
-                            v-on:click="checkedChangeDoing(todo.id)">
+                            v-on:click="checkedChangeDoing(listId,todo.id)">
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
                         style="
                             color: #873803;
                             font-size: 1.5vw;"
-                            v-on:click="deleteConfirm(todo.id)"
+                            v-on:click="deleteConfirm(listId,todo.id)"
                             >
                         <i class="fa-solid fa-calendar-xmark"></i>
                     </button>
@@ -70,16 +70,14 @@
     import pubsub from 'pubsub-js'
 
     export default {
-        name:'Item',
-        // 声明接收todo对象数据
-        // 声明接收checkedChange函数 通过传递函数将子组件的数据传递给父组件
-        // 声明接收删除事项的函数deleteList
-        props:['todo','checkedChange','deleteList','checkedChangeDoing'],
+        name:'CustomItem',
+        props:['todo','listId','checkedChange','deleteList','checkedChangeDoing'],
+
         methods: {
             // 用户确认删除list
-            deleteConfirm(id) {
+            deleteConfirm(listId,todoId) {
                 if(confirm('Are you sure to delete this list?')) {
-                    this.deleteList(id);
+                    this.deleteList(listId,todoId);
                 }
             },
             // 编辑
@@ -95,32 +93,3 @@
         }
     }
 </script>
-    
-<style scoped lang="scss">
-    /* 无序标签取消原点 */
-    ul {
-        list-style: none;
-    }
-    /* 区分doing和done */
-    .checkbox {
-        display: flex;
-        flex-direction: column;
-    }
-    /* 每条list的内容 */
-    .lists-content {
-        font-size: 1.5vw;
-        color: #873803;
-    }
-    #isDone,#isDoing {
-        width: 1.5vw;
-        height: 1.5vw;
-    }
-    #todo-title {
-        width: 85%;
-    }
-    /* 按键布局 */
-    .list-buttons {
-        display: flex;
-        flex-direction: column;
-    }
-</style>
