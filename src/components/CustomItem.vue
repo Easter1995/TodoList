@@ -6,10 +6,11 @@
             <li>
                 <!-- 使用todo对象的数据 -->
                 <!-- 勾选框 -->
-                <div class="checkbox" style="width: 10%;">
+                <div class="checkbox">
                     <!-- 勾选已经完成 -->
                     <div class="isDone">
                         <input type="checkbox" 
+                            title="DONE"
                             name="isDone" 
                             id="isDone" 
                             :checked="todo.done" 
@@ -19,6 +20,7 @@
                     <!-- 勾选正在完成 -->
                     <div class="isDone" style="margin-top: 20%;">
                         <input type="checkbox" 
+                            title="DOING"
                             name="isDoing" 
                             id="isDoing" 
                             :checked="todo.doing" 
@@ -35,12 +37,13 @@
                         v-show="todo.isEdit"
                         style="background-color: transparent;
                                 border-color: #e4803d;"
-                        @keyup.enter="edit(todo,$event)">
+                        @keyup.enter="edit(listId,todo,$event)">
                 </div>
 
                 <div class="list-buttons" style="width: 30%;">
                     <!-- 删除键样式 -->
                     <button 
+                        title="DELETE"
                         id="common-btn" 
                         style="
                             color: #873803;
@@ -52,12 +55,12 @@
 
                     <!-- 编辑键样式 -->
                     <button
+                        title="EDIT"
                         id="common-btn" 
                         style="
                             color: #873803;
                             font-size: 1.5vw;"
-                        v-on:click="listEdit(todo)"
-                            >
+                        v-on:click="listEdit(listId,todo)">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </button>
                 </div>
@@ -81,15 +84,22 @@
                 }
             },
             // 编辑
-            listEdit(todo) {
+            listEdit(listId,todo) {
                 todo.isEdit = true;
             },
-            // edit(todo,e) {
-            //     //将状态改回去
-            //     todo.isEdit = false;
-            //     //将用户的改动转递给List
-            //     this.$bus.$emit('updateTodo',todo.id,e.target.value);
-            // }
+            //修改todo的内容
+            edit(listId,todo,e) {
+                // 将状态改回去
+                todo.isEdit = false;
+                //包装对象
+                const msg = {
+                    todoId:todo.id,
+                    title:e.target.value,
+                    listId:listId
+                }
+                //发布消息
+                pubsub.publish('updateCusList',msg);
+            }
         }
     }
 </script>

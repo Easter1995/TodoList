@@ -21,12 +21,22 @@
                         <div class="list-title-band">
                             <!-- list标题 -->
                             <div class="list-title">
-                                {{list.title}}
-                                <button id="common-btn" 
-                                    style="font-size: 2.4vw; color: aliceblue;"
-                                    v-on:click="deleteWholeList(list.id)">
+                                <!-- 不在编辑 -->
+                                <div v-show="!list.isEdit">
+                                    {{list.title}}
+                                    <button id="common-btn" title="DELETE LIST" style="font-size: 2.4vw; color: aliceblue;" v-on:click="deleteWholeList(list.id)">
                                         <i class="fa-solid fa-calendar-minus"></i>
-                                </button>
+                                    </button>
+                                    <button id="common-btn" title="EDIT" style="font-size: 2.4vw; color: aliceblue;" v-on:click="isEdit(list)">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                                <!-- 在编辑 -->
+                                <input type="text" id="list-editbox" 
+                                    v-show="list.isEdit"
+                                    style="background-color: transparent;
+                                            border-color: #e4803d;"
+                                    @keyup.enter="updateList(list,$event)">
                             </div>
                         </div>
                         
@@ -103,7 +113,7 @@
         // 这里是设置定时器，想让统计进度的函数每秒执行一次，一直更新进度
         created: function () {
             //这里是定时器
-            setInterval(this.timer, 500);
+            setInterval(this.timer, 1000);
         },
 
         mounted() {
@@ -126,11 +136,8 @@
                 });
             })
 
-            //订阅消息 接收到来自List组件的消息
-            this.pubId3 = pubsub.subscribe('progress',(_,progressNum)=>{
-                this.done=progressNum[0];
-                this.all=progressNum[1];
-            })
+            //修改lists的消息
+            this.pubId3 = pubsub.subscribe('updateCusList',this.updateTodo)
         },
 
         data() {
@@ -141,6 +148,7 @@
                     {
                         id:1,
                         title:"国庆旅游计划",
+                        isEdit:false,
                         todos:[
                             {id:1,title:'天安门一日游',done:false,doing:false,isEdit:false},
                             {id:2,title:'雍和宫一日游',done:true,doing:false,isEdit:false},
@@ -150,6 +158,7 @@
                     {
                         id:2,
                         title:"端午旅游计划",
+                        isEdit:false,
                         todos:[
                             {id:1,title:'朝天门一日游',done:false,doing:false,isEdit:false},
                             {id:2,title:'江北一日游',done:true,doing:false,isEdit:false},
@@ -159,13 +168,9 @@
                 ],
                 nextListId:3,
 
-                //List组件的
+                //完成情况
                 done:0,
                 all:0,
-
-                //总的
-                doneA:0,
-                allA:0,
             }
         },
 
@@ -182,6 +187,7 @@
                     this.lists.unshift({
                         id:this.nextListId++,
                         // 获取用户输入值
+                        isEdit:false,
                         title:document.getElementById("todo-list-title").value,
                         todos:[],
                         nextTodoId:1,
@@ -279,11 +285,35 @@
                         }
                     });
                 });
-                this.doneA=doneNum+this.done;
-                this.allA=allNum+this.all;
-                let progressNum1 = [this.doneA,this.allA];
+                let progressNum1 = [doneNum,allNum];
                 //把这个数组传递给bottom组件
                 pubsub.publish('progress1',progressNum1);
+            },
+
+            //修改todo
+            updateTodo(_,msg) {
+                let listId = msg.listId;
+                let title = msg.title;
+                let todoId = msg.todoId;
+                this.lists.forEach((list) => {
+                    if(list.id == listId) {
+                        list.todos.forEach((todo) => {
+                            if(todo.id == todoId) {
+                                todo.title = title;
+                            }
+                        });
+                    }
+                });
+            },
+            
+            //修改list
+            isEdit(list) {
+                list.isEdit=true;
+            },
+            updateList(list,e) {
+                list.isEdit = false
+                if(e.target.value!='')
+                    list.title = e.target.value;
             },
 
             timer: function () {

@@ -6,12 +6,11 @@
       <div class="todo-list-wrap">
         <Top/>
         <div id="division-line"></div>
-        <List/>
         <div id="division-line"></div>
-        <div style="text-align: center; color: coral; font-size: 2.5vw;">MAKE YOUR OWN LISTS!</div>
         <CustomList/>
         <div id="division-line"></div>
         <Bottom/>
+        <BackToTop/>
       </div>
     </div>
   </div>
@@ -19,13 +18,13 @@
 
 <script>
   import Bottom from './components/Bottom'
-  import List from './components/List'
   import CustomList from './components/CustomList'
   import Top from './components/Top'
+  import BackToTop from './components/BackToTop'
 
   export default {
     name: 'App',
-    components:{Bottom,List,Top,CustomList}
+    components:{Bottom,Top,CustomList,BackToTop}
   }
 </script>
 

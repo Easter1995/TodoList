@@ -15,10 +15,10 @@
                 <div class="top-buttons">
                     <!-- 左侧按钮 -->
                     <div class="left-button top-comp" style="float: left;">
-                        <button id="selectAll" v-on:click="selectAll">
+                        <button id="selectAll" title="SELECT ALL" v-on:click="selectAll">
                             <i class="fa-solid fa-clipboard-check"></i>
                         </button>
-                        <button id="clearDone" v-on:click="clearDone">
+                        <button id="clearDone" title="DELETE ALL DoneLists" v-on:click="clearDone">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>
@@ -42,10 +42,13 @@
 
 <script>
     import pubsub from 'pubsub-js'
+    import Search from './Search'
     export default {
         name:'Top',
-        components:{Date},
+        components:{Search},
         methods: {
+            //搜索
+
             //全选按钮
             selectAll() {
                 pubsub.publish('selectAll');
