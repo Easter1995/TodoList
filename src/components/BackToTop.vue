@@ -1,7 +1,7 @@
 <!-- 返回顶部组件 -->
 <template>
     <div class="back-to-top">
-        <button v-on:click="topFunction" id="myBtn" title="BACK TO TOP">
+        <button v-on:click="scollTop" id="myBtn" title="BACK TO TOP">
             <i class="fa-solid fa-circle-up"></i>
         </button>
     </div>
@@ -26,8 +26,21 @@
             topFunction() {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
+            },
+            // 返回顶部
+            scollTop() {
+                //  设置一个定时器
+                const upRoll = setInterval(() => {
+                    const top = document.documentElement.scrollTop // 每次获取页面被卷去的部分
+                    const speed = Math.ceil(top / 10) // 每次滚动多少 （步长值）
+                    if (document.documentElement.scrollTop > 0) {
+                        document.documentElement.scrollTop -= speed // 不在顶部 每次滚动到的位置
+                    } else {
+                        clearInterval(upRoll) // 回到顶部清除定时器
+                    }
+                }, 20)
             }
-        },
+        }
     }
 </script>
 

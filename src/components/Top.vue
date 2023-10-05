@@ -10,7 +10,7 @@
                     </a>
                 </div>
             </div>
-            <!-- 按键和日期 -->
+            <!-- 按键 -->
             <div class="button-wrapper">
                 <div class="top-buttons">
                     <!-- 左侧按钮 -->
@@ -23,17 +23,38 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- 输入框 只有在isSearch为真时显示 -->
+                <div class="search-box">
+                    <input type="text" name="search-box" id="search-box"
+                        v-show="this.isSearch"
+                        placeholder="输入要查找的内容"
+                        style="background-color: transparent;font-size: 2vw;"
+                        @keyup.enter="searchValue($event)">
+                </div>
                 
                 <div class="top-buttons">
                     <!-- 右侧按钮 -->
                     <div class="right-button top-comp" style="float: right;">
-                        <button id="search">
+                        <button id="search" title="SEARCH" style="width: 100%;" v-on:click="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                        <button id="top-new-list">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
                     </div>
+                </div>
+            </div>
+            <div id="division-line" style="background-color: aliceblue; width: 100%;"></div>
+            <!-- 搜索框 -->
+            <div class="search-lists-wrapper" v-show="this.isSearch" style="width: 100%;">
+                <!-- 搜索框的抬头，是一个叉叉，点一下搜索框就关闭 -->
+                <div class="search-band" style="background-color:bisque">
+                    <button id="search-cancel" class="cancel-btn" title="CLOSE" v-on:click="searchCancel">
+                        <i class="fa-solid fa-rectangle-xmark"></i>
+                    </button>
+                </div>
+                <!-- 搜索框的列表部分 -->
+                <div>
+                    <!-- 列表组件 -->
+                    <SearchList/>
                 </div>
             </div>
         </div>
@@ -42,12 +63,31 @@
 
 <script>
     import pubsub from 'pubsub-js'
-    import Search from './Search'
+    import SearchList from './SearchList'
+
     export default {
         name:'Top',
-        components:{Search},
+        components:{SearchList},
+        data() {
+            return {
+                isSearch:false,
+                inputValue:'',//输入框的默认值
+            }
+        },
         methods: {
             //搜索
+            search() {
+                this.isSearch = true;
+            },
+            searchCancel() {
+                this.isSearch = false;
+                pubsub.publish('searchCancel','')
+            },
+            //把搜索的内容传给List组件
+            searchValue(e) {
+                pubsub.publish('searchTodos',e.target.value);
+                document.getElementById('search-box').value = '';
+            },
 
             //全选按钮
             selectAll() {
@@ -56,7 +96,8 @@
 
             //清空已经做完的事项按钮
             clearDone() {
-                pubsub.publish('clearDone');
+                if(confirm('Are you sure to delete all lists you have done?'))
+                    pubsub.publish('clearDone');
             }
 
         },
@@ -102,5 +143,17 @@
         width: 40%;
         text-align: center;
         color: aliceblue;
+    }
+    
+    .cancel-btn {
+        background-color: transparent;
+        border-style: none;
+        font-size: 2vw;
+        color: #873803;
+        margin: 0 93%;
+        &:hover{
+            border: 2px solid aliceblue;
+            background-color: rgb(250, 181, 77);
+        }
     }
 </style>

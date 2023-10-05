@@ -30,6 +30,7 @@
 
                 <!-- 内容 -->
                 <div class="listText" style="width: 70%;">
+                    <a v-bind:name="todo.title"></a>
                     <!-- 不在编辑状态时显示todo.title -->
                     <span id="list-text" v-show="!todo.isEdit">{{todo.title}}</span>
                     <!-- 在编辑状态时显示输入框 -->

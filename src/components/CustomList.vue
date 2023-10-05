@@ -23,6 +23,7 @@
                             <div class="list-title">
                                 <!-- 不在编辑 -->
                                 <div v-show="!list.isEdit">
+                                    <a v-bind:name="list.title"></a>
                                     {{list.title}}
                                     <button id="common-btn" title="DELETE LIST" style="font-size: 2.4vw; color: aliceblue;" v-on:click="deleteWholeList(list.id)">
                                         <i class="fa-solid fa-calendar-minus"></i>
@@ -107,7 +108,7 @@
     import pubsub from 'pubsub-js'
 
     export default {
-        name:'CustomList',
+        title:'CustomList',
         components: {CustomItem},
 
         // 这里是设置定时器，想让统计进度的函数每秒执行一次，一直更新进度
@@ -128,7 +129,7 @@
             })
 
             //清空已经完成的
-            this.pubId2 = pubsub.subscribe('selectAll',(_)=>{
+            this.pubId2 = pubsub.subscribe('clearDone',(_)=>{
                 this.lists.forEach((list) => {
                     list.todos.forEach((todo) => {
                         this.deleteList(list.id,todo.id);
@@ -138,6 +139,16 @@
 
             //修改lists的消息
             this.pubId3 = pubsub.subscribe('updateCusList',this.updateTodo)
+
+            //搜索
+            this.pubId4 = pubsub.subscribe('searchTodos',this.search)
+
+            //liststitles
+            function titleNum() {
+                this.lists.forEach((list) => {
+                    listsTitles.push(list.title);
+                });
+            }
         },
 
         data() {
@@ -171,6 +182,10 @@
                 //完成情况
                 done:0,
                 all:0,
+
+                //搜索功能中要用到
+                allTodos:[],
+                propTodos:[],
             }
         },
 
@@ -269,7 +284,7 @@
                 if(confirm('Are you sure to delete the whole list?')) {
                     this.lists = this.lists.filter((list) => {
                         return list.id !== ListId;
-                    })
+                    });
                 }
             },
         
@@ -311,9 +326,14 @@
                 list.isEdit=true;
             },
             updateList(list,e) {
-                list.isEdit = false
+                list.isEdit = false;
                 if(e.target.value!='')
                     list.title = e.target.value;
+            },
+
+            //给Menu组件传递数据
+            listMenu() {
+                pubsub.publish('listMenu',this.lists);
             },
 
             timer: function () {
@@ -323,7 +343,41 @@
             getorderdata() {
                 //想要定时执行的函数
                 this.bottomNum(this.todos);
+                this.listMenu();
             },
+        
+            search(_,value) {
+                // 加载所有list里面的todo
+                this.lists.forEach((list) => {
+                    list.todos.forEach((todo) => {
+                        this.allTodos.push(todo);
+                    });
+                });
+                // 若未输入值，则展示所有数据
+                if(null === value || undefined === value){
+                    this.propTodos = this.allTodos;
+                } else {
+                    this.propTodos = []; // 结果列表置空
+                    let regStr =  '';
+                    // 初始化正则表达式
+                    for(let i=0; i<value.length; i++){
+                        regStr = regStr + '(' + value[i] + ')([\\s]*)'; //跨字匹配
+                    }
+                    let reg = new RegExp(regStr);
+                    for(let i=0; i<this.allTodos.length; i++){
+                        let title = this.allTodos[i].title; //按照名字匹配
+                        let regMatch = title.match(reg);
+                        if(null !== regMatch) {// 将匹配的数据放入结果列表中
+                            this.propTodos.push(this.allTodos[i]);
+                        }
+                    }
+                }
+                // alltodos清空
+                this.allTodos.length = 0;
+                // 把筛选出来的propTodos传给列表组件
+                pubsub.publish('searchList',this.propTodos);
+            },
+        
         },
     }
 </script>
