@@ -132,7 +132,8 @@
             this.pubId2 = pubsub.subscribe('clearDone',(_)=>{
                 this.lists.forEach((list) => {
                     list.todos.forEach((todo) => {
-                        this.deleteList(list.id,todo.id);
+                        if(todo.done)
+                            this.deleteList(list.id,todo.id);
                     });
                 });
             })

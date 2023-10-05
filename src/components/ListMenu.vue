@@ -15,8 +15,11 @@
                     <span class="title">{{title}}</span>
                     <!-- 跳转 -->
                     <span>
-                        <button class="goto-button" v-on:click="hrefChange1(title)">
-                            <a v-bind:href="listHref" style="color:#873803; font-size: 1.3vw;"><i class="fa-solid fa-circle-arrow-right"></i></a>
+                        <button class="goto-button" title="goto" v-on:click="hrefChange1(title)">
+                            <a v-bind:href="listHref" 
+                                style="color:#873803; font-size: 1.3vw;">
+                                <i class="fa-solid fa-circle-arrow-right"></i>
+                            </a>
                         </button>
                     </span>
                     <hr>
@@ -51,47 +54,85 @@
             // 跳转
             hrefChange1(title) {
                 this.listHref = '#' + title
-            }
+            },
         },
     }
 </script>
 
 <style>
     /* 整体布局 */
-    .list-menu-body {
-        position: fixed;
-        height: 70%;
-        width: 24%;
-        background-color: #ffecca;
-        .list-menu-wrap {
-            margin: 10% 5%;
-        }
-    }
-
-    /* 具体内容 */
-    .list-menu-content {
-        .title {
-            font-size: 1.3vw;
-            margin: 3% 0 3% 0;
-        }
-        .goto-button {
-            background-color: transparent;
-            border-style: none;
-            width: 4vw;
-            
-            &:hover {
-                border: 2px solid aliceblue;
-                border-radius: 10px;
-                background-color: rgb(250, 181, 77);
+    @media screen and (min-width: 800px) {
+        .list-menu-body {
+            position: fixed;
+            height: 70%;
+            width: 24%;
+            background-color: #ffecca;
+            .list-menu-wrap {
+                margin: 10% 5%;
             }
         }
+
+        /* 具体内容 */
+        .list-menu-content {
+            .title {
+                font-size: 1.3vw;
+                margin: 3% 0 3% 0;
+            }
+            .goto-button {
+                background-color: transparent;
+                border-style: none;
+                width: 4vw;
+                
+                &:hover {
+                    border: 2px solid aliceblue;
+                    border-radius: 10px;
+                    background-color: rgb(250, 181, 77);
+                }
+            }
+        }
+
+        .list-menu-title {
+            font-weight: bold;
+            color: #873803;
+            font-size: 1.9vw;
+            margin: 0 0 6% 0;
+        }
     }
 
-    .list-menu-title {
-        font-weight: bold;
-        color: #873803;
-        font-size: 1.9vw;
-        margin: 0 0 6% 0;
+    @media screen and (max-width: 799px) {
+        .list-menu-body {
+            background-color: #ffecca;
+            width: 100%;
+            .list-menu-wrap {
+                margin: 10px;
+            }
+        }
+        /* 具体内容 */
+        .list-menu-content {
+            .title {
+                font-size: 1.3vw;
+                margin: 3% 0 3% 0;
+            }
+            .goto-button {
+                background-color: transparent;
+                border-style: none;
+                width: 4vw;
+                
+                &:hover {
+                    border: 2px solid aliceblue;
+                    border-radius: 10px;
+                    background-color: rgb(250, 181, 77);
+                }
+            }
+        }
+
+        .list-menu-title {
+            font-weight: bold;
+            color: #873803;
+            font-size: 1.9vw;
+            margin: 0 0 1% 0;
+            padding: 1vw;
+        }
     }
 
 </style>

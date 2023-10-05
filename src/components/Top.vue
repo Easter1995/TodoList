@@ -36,7 +36,14 @@
                 <div class="top-buttons">
                     <!-- 右侧按钮 -->
                     <div class="right-button top-comp" style="float: right;">
-                        <button id="search" title="SEARCH" style="width: 100%;" v-on:click="search">
+                        <!-- 在屏幕尺寸小于800时显示菜单按钮 -->
+                        <button v-if="screenWidth < 800" id="menu" title="MENU" style="width: 50%;"
+                                v-on:click="showMenu">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+
+                        <!-- 在屏幕尺寸大于等于800时不显示菜单按钮 -->
+                        <button  id="search" title="SEARCH" style="width: 50%;" v-on:click="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
@@ -64,6 +71,7 @@
 <script>
     import pubsub from 'pubsub-js'
     import SearchList from './SearchList'
+    
 
     export default {
         name:'Top',
@@ -72,9 +80,46 @@
             return {
                 isSearch:false,
                 inputValue:'',//输入框的默认值
+                screenWidth: document.body.clientWidth,//屏幕大小
+                timer: false,
             }
         },
+
+        mounted() {
+            // 监听screenWidth，改变data的screenWidth
+            window.addEventListener('resize', () => {
+                const screenWidths = document.body.clientWidth;
+                this.screenWidth = screenWidths;
+            })
+        },
+
+        watch: {
+            /*监听页面*/
+            screenWidth(val) {
+                // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+                if (!this.timer) {
+                    // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+                    this.screenWidth = val;
+                    this.timer = true;
+                    setTimeout(() => {
+                        let screenWidth = this.screenWidth;
+                        // if (screenWidth < 800) {
+                        //     console.log(screenWidth);
+                        if (screenWidth >= 800) {
+                            pubsub.publish('showMenu',this.screenWidth);
+                        }
+                        this.timer = false;
+                    }, 600);
+                }
+            },
+        },
+
         methods: {
+            //显示菜单
+            showMenu() {
+                pubsub.publish('showMenu',this.screenWidth);
+            },
+
             //搜索
             search() {
                 this.isSearch = true;
