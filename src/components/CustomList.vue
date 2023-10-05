@@ -427,7 +427,7 @@
             width: 30%;
             margin: 0 2vw 0 2vw;
             .List-title {
-                font-size: 2vw;
+                font-size: 1vw;
                 text-align: center;
                 color: coral;
                 background-color: #f2deb9;

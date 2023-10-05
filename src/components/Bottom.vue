@@ -5,7 +5,7 @@
             <span id="progress-icon">
                 <i class="fa-solid fa-champagne-glasses" style="font-size: 1vw;"></i>
             </span>
-            <span id="progress" style="font-size: 2vw;">done: {{done}}/all: {{all}}</span>
+            <span id="progress" style="font-size: 1vw;">done: {{done}}/all: {{all}}</span>
         </div>
     </footer>
 </template>
