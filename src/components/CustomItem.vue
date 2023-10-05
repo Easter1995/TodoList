@@ -108,7 +108,7 @@
 
 <style>
     .lists-content {
-        font-size: 1.5vw;
+        font-size: 1vw;
         color: #873803;
     }
 
