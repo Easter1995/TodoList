@@ -3,7 +3,7 @@
     <footer class="footer">
         <div class="footer-inner">
             <span id="progress-icon">
-                <i class="fa-solid fa-champagne-glasses" style="font-size: 2vw;"></i>
+                <i class="fa-solid fa-champagne-glasses" style="font-size: 1vw;"></i>
             </span>
             <span id="progress" style="font-size: 2vw;">done: {{done}}/all: {{all}}</span>
         </div>
@@ -45,7 +45,7 @@
 <style scoped lang="scss">
     /* 整体高度 */
     .footer {
-        height: 10vw;
+        height: 7vw;
         text-align: center;
         background-color: #ffac74;
         .footer-inner {

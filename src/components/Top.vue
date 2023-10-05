@@ -167,7 +167,7 @@
     }
     /* 大标题的样式 */
     .top-title {
-        font-size: 5.5vw;
+        font-size: 3vw;
         font-weight: 800;
         color: aliceblue;
     }

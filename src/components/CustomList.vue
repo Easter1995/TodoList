@@ -5,7 +5,9 @@
              <!-- 输入List的名字 -->
             <div class="new-list" id="new-list" style="background-color: #ffdd9f;">
                 <span>&emsp;</span>
-                <input type="text" placeholder="回车或点击submit新增List" id="todo-list-title" class="todo-list-text" @keyup.enter="addList">
+                <input type="text" placeholder="回车或点击submit新增List" 
+                    id="todo-list-title" class="todo-list-text" 
+                    @keyup.enter="addList">
                 <span>&emsp;</span>
                 <input type="submit" value="submit" id="submit" v-on:click="addList">
                 <span>&emsp;</span>
@@ -25,10 +27,10 @@
                                 <div v-show="!list.isEdit">
                                     <a v-bind:name="list.title"></a>
                                     {{list.title}}
-                                    <button id="common-btn" title="DELETE LIST" style="font-size: 2.4vw; color: aliceblue;" v-on:click="deleteWholeList(list.id)">
+                                    <button id="common-btn" title="DELETE LIST" style="font-size: 2vw; color: aliceblue;" v-on:click="deleteWholeList(list.id)">
                                         <i class="fa-solid fa-calendar-minus"></i>
                                     </button>
-                                    <button id="common-btn" title="EDIT" style="font-size: 2.4vw; color: aliceblue;" v-on:click="isEdit(list)">
+                                    <button id="common-btn" title="EDIT" style="font-size: 2vw; color: aliceblue;" v-on:click="isEdit(list)">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                 </div>
@@ -44,7 +46,9 @@
                         <!-- 新增todos -->
                         <div class="new-list" id="new-list">
                             <span>&emsp;</span>
-                            <input type="text" placeholder="回车新增todo" id="todo-list-todo" class="todo-list-text" @keyup.enter="addTodo(list.id)">
+                            <input type="text" placeholder="回车新增todo" 
+                                id="todo-list-todo-sb" class="todo-list-text" 
+                                @keyup.enter="addTodo(list.id,$event)">
                             <span>&emsp;</span>
                         </div>
                         
@@ -181,34 +185,37 @@
                 if (document.getElementById("todo-list-title").value!='') {
                     //构造对象
                     this.lists.unshift({
-                        id:this.nextListId++,
+                        id:this.nextListId,
                         // 获取用户输入值
                         isEdit:false,
                         title:document.getElementById("todo-list-title").value,
                         todos:[],
                         nextTodoId:1,
                     });
+                    this.nextListId++;
                     // 清空用户输入值
                     document.getElementById("todo-list-title").value="";
                 }
             },
 
-            addTodo(id) {
-                this.lists.forEach((list) => {
+            addTodo(id,e) {
+                if(e.target.value!=''){
+                    this.lists.forEach((list) => {
                     // 找到匹配的list,修改该list的todos
                     if(list.id == id) {
-                        // 构造todos的对象
-                        list.todos.unshift({
-                            id:list.nextTodoId++,
-                            title:document.getElementById("todo-list-todo").value,
-                            done:false,
-                            doing:false,
-                            isEdit:false
-                        })
-                        document.getElementById("todo-list-todo").value='';
-                        return;
-                    }
-                });
+                            // 构造todos的对象
+                            list.todos.unshift({
+                                id:list.nextTodoId++,
+                                title:e.target.value,
+                                done:false,
+                                doing:false,
+                                isEdit:false
+                            })
+                            document.getElementById("todo-list-todo-sb").value="";
+                            return;
+                        }
+                    });
+                }
             },
 
             //勾选事项和取消勾选的函数
@@ -403,9 +410,9 @@
     }
 
     .list-title {
-        height: 6vw;
+        height: 3vw;
         color: aliceblue;
-        font-size: 3vw;
+        font-size: 2vw;
         font-weight: bold;
         text-align: center;
         border: white solid;
@@ -420,13 +427,13 @@
             width: 30%;
             margin: 0 2vw 0 2vw;
             .List-title {
-                font-size: 3vw;
+                font-size: 2vw;
                 text-align: center;
                 color: coral;
                 background-color: #f2deb9;
-                height: 7vw;
+                height: 3vw;
                 border-radius: 20px;
-                margin: 2vw 0 2vw 0;
+                margin: 1vw 0 1vw 0;
             }
         }
     }

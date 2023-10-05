@@ -37,7 +37,8 @@
                     <input type="text" id="list-editbox" 
                         v-show="todo.isEdit"
                         style="background-color: transparent;
-                                border-color: #e4803d;"
+                                border-color: #e4803d;
+                                width: 100%;"
                         @keyup.enter="edit(listId,todo,$event)">
                 </div>
 
