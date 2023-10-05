@@ -115,6 +115,8 @@
         created: function () {
             //这里是定时器
             setInterval(this.timer, 1000);
+            if(this.lists == null)
+                this.lists = [];
         },
 
         mounted() {
@@ -155,30 +157,8 @@
         data() {
             return {
                 // 用lists数组来存list的信息
-                lists:[
-                    //每个list都是一个对象，包含title、id、todos
-                    {
-                        id:1,
-                        title:"国庆旅游计划",
-                        isEdit:false,
-                        todos:[
-                            {id:1,title:'天安门一日游',done:false,doing:false,isEdit:false},
-                            {id:2,title:'雍和宫一日游',done:true,doing:false,isEdit:false},
-                        ],
-                        nextTodoId:3
-                    },
-                    {
-                        id:2,
-                        title:"端午旅游计划",
-                        isEdit:false,
-                        todos:[
-                            {id:1,title:'朝天门一日游',done:false,doing:false,isEdit:false},
-                            {id:2,title:'江北一日游',done:true,doing:false,isEdit:false},
-                        ],
-                        nextTodoId:3
-                    }
-                ],
-                nextListId:3,
+                lists:JSON.parse(localStorage.getItem('lists')),
+                nextListId:1,
 
                 //完成情况
                 done:0,
@@ -380,6 +360,16 @@
             },
         
         },
+    
+        //监视lists有没有改变，本地存储
+        watch: {
+            lists:{
+                handler(value) {
+                    localStorage.setItem('lists',JSON.stringify(value));
+                },
+                deep:true
+            }
+        }
     }
 </script>
 
