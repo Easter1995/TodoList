@@ -410,7 +410,6 @@
     }
 
     .list-title {
-        height: 3vw;
         color: aliceblue;
         font-size: 2vw;
         font-weight: bold;
@@ -427,11 +426,10 @@
             width: 30%;
             margin: 0 2vw 0 2vw;
             .List-title {
-                font-size: 1vw;
+                font-size: 1.9vw;
                 text-align: center;
                 color: coral;
                 background-color: #f2deb9;
-                height: 3vw;
                 border-radius: 20px;
                 margin: 1vw 0 1vw 0;
             }

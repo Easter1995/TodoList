@@ -49,7 +49,7 @@
         text-align: center;
         background-color: #ffac74;
         .footer-inner {
-            margin: 3vw;
+            margin: 1%;
             font-size: 1.5vw;
             color: aliceblue;
         }

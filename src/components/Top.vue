@@ -5,9 +5,7 @@
             <!-- 大标题 -->
             <div class="title-wrapper">
                 <div class="title isLink">
-                    <a href="/">
-                        <div class="top-title">TODO LIST</div>
-                    </a>
+                    <div class="top-title">TODO LIST</div>
                 </div>
             </div>
             <!-- 按键 -->
@@ -29,7 +27,7 @@
                     <input type="text" name="search-box" id="search-box"
                         v-show="this.isSearch"
                         placeholder="输入要查找的内容"
-                        style="background-color: transparent;font-size: 2vw;"
+                        style="background-color: transparent;font-size: 1.3vw;"
                         @keyup.enter="searchValue($event)">
                 </div>
                 
