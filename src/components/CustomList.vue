@@ -117,6 +117,8 @@
 
         // 这里是设置定时器，想让统计进度的函数每秒执行一次，一直更新进度
         created: function () {
+            //indexdb
+            // this.initDB();
             //这里是定时器
             setInterval(this.timer, 1000);
             if(this.lists == null)
@@ -180,6 +182,69 @@
         },
 
         methods: {
+            // // 数据库初始化
+            // initDB() {
+            //     let request = window.indexedDB.open('myDB');
+            //     //err
+            //     request.onerror = event=>{
+            //         console.log('数据库打开出错',event);
+            //     }
+
+            //     //如果指定的版本号，大于数据库的实际版本号，就会发生数据库升级事件upgradeneeded。
+			// 	//升级后自动触发success
+            //     request.onupgradeneeded = event=>{
+            //         let db = event.target.result;
+            //         this.db = db;
+            //         // 建表 名为lists 主键为id 自增
+            //         let store = db.createObjectStore('lists',{
+            //             keyPath: 'id',
+            //             autoIncrement:true
+            //         });
+            //         //新建索引名称、索引所在的属性、配置对象（说明该属性是否允许有重复的值）
+            //         store.createIndex('title', 'title', {
+            //             unique: false
+            //         });
+            //         store.createIndex('isEdit', 'isEdit', {
+            //             unique: false
+            //         });
+            //         let todos={
+            //             keyPath: 'id',
+            //             isEdit: false,
+            //             done: false,
+            //             doing: false,
+            //             title:'',
+            //             autoIncrement:true,
+            //         } 
+            //         store.createIndex('todos', todos, {
+            //             unique: false
+            //         });
+            //         console.log('数据库升级');
+            //     }
+            //     // success
+            //     request.onsuccess = event => {
+            //         this.db = event.target.result;
+            //         console.log('数据库打开/创建成功', event)
+            //         this.getList();
+            //     }
+            // },
+
+            // // 获取数据库
+            // getList(){
+            //     var transaction = this.db.transaction(['lists']);
+            //     let objectStore = transaction.objectStore('lists');
+            //     let list = [];
+            //     // 遍历数据库
+            //     objectStore.openCursor().onsuccess = event => {
+            //         let cursor = event.target.result;
+            //         if (cursor) {
+            //             list.push(cursor.value)
+            //             cursor.continue();
+            //         }else{
+            //             this.list = list;
+            //         }
+            //     }
+            // },
+
             // 新增List的函数
             addList(event) {
                 if (document.getElementById("todo-list-title").value!='') {
