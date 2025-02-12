@@ -110,15 +110,18 @@
 <script>
     import CustomItem from './CustomItem'
     import pubsub from 'pubsub-js'
+    import { addData, getAllData } from '@/utils/indexedDB.js';
 
     export default {
         title:'CustomList',
         components: {CustomItem},
 
         // 这里是设置定时器，想让统计进度的函数每秒执行一次，一直更新进度
-        created: function () {
-            //indexdb
-            // this.initDB();
+        created: async function () {
+            // 从数据库加载
+            const data = await getAllData()
+            this.lists = JSON.parse(JSON.stringify(data))
+            
             //这里是定时器
             setInterval(this.timer, 1000);
             if(this.lists == null)
@@ -163,7 +166,7 @@
         data() {
             return {
                 // 用lists数组来存list的信息
-                lists:JSON.parse(localStorage.getItem('lists')),
+                lists:[],
                 nextListId:1,
 
                 //完成情况
@@ -372,11 +375,11 @@
     
         //监视lists有没有改变，本地存储
         watch: {
-            lists:{
+            lists: {
                 handler(value) {
-                    localStorage.setItem('lists',JSON.stringify(value));
+                    addData(JSON.stringify(this.lists));  // 存入 IndexedDB
                 },
-                deep:true
+                deep: true
             }
         }
     }
